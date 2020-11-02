@@ -1,4 +1,44 @@
-
+////////////////////////////////////////////////////////////////////////////////
+////                                                                        ////
+//// Project Name: HyCUBE (Verilog, SystemVerilog)                          ////
+////                                                                        ////
+//// Module Name: hycube                                                    ////
+////                                                                        ////
+////                                                                        ////
+////  This file is part of the Ethernet IP core project                     ////
+////  https://github.com/aditi3512/HyCUBE                                   ////
+////                                                                        ////
+////  Author(s):                                                            ////
+////      NUS                                                               ////
+////                                                                        ////
+////  Refer to Readme.txt for more information                              ////
+////                                                                        ////
+////////////////////////////////////////////////////////////////////////////////
+////                                                                        ////
+//// Copyright (C) 2014, 2015 Authors                                       ////
+////                                                                        ////
+//// This source file may be used and distributed without                   ////
+//// restriction provided that this copyright statement is not              ////
+//// removed from the file and that any derivative work contains            ////
+//// the original copyright notice and the associated disclaimer.           ////
+////                                                                        ////
+//// This source file is free software; you can redistribute it             ////
+//// and/or modify it under the terms of the GNU Lesser General             ////
+//// Public License as published by the Free Software Foundation;           ////
+//// either version 2.1 of the License, or (at your option) any             ////
+//// later version.                                                         ////
+////                                                                        ////
+//// This source is distributed in the hope that it will be                 ////
+//// useful, but WITHOUT ANY WARRANTY; without even the implied             ////
+//// warranty of MERCHANTABILITY or FITNESS FOR A PARTICULAR                ////
+//// PURPOSE.  See the GNU Lesser General Public License for more           ////
+//// details.                                                               ////
+////                                                                        ////
+//// You should have received a copy of the GNU Lesser General              ////
+//// Public License along with this source; if not, download it             ////
+//// from http://www.opencores.org/lgpl.shtml                               ////
+////                                                                        ////
+////////////////////////////////////////////////////////////////////////////////
 
 module hycube(
     clk,
@@ -67,7 +107,7 @@ localparam TILE_NUM_OUTPUT_PORTS        = 7;
 //------------------------------------------------------------------------------
 // IO
 //------------------------------------------------------------------------------
-// Network
+
 
 reg start_exec;
 reg exec_end;
@@ -93,7 +133,8 @@ wire chip_en_dm12;
 //----------------------------------------------------------------------
 //----------------------SPI-Network logic-------------------------------
 //----------------------------------------------------------------------
-
+// Determines if input is data or address
+	
 always @ (posedge clk)
 begin
 if (reset)
@@ -123,7 +164,7 @@ end
 
 reg [3:0] dm_en;
 
-//always_comb
+//Based on address, determines if data memory is to be enabled
 always @ (posedge clk)
 begin
 if (reset) begin
@@ -150,7 +191,7 @@ assign chip_en_dm8 = (dm_en == 4'b0100) ? 1'b0 : 1'b1;
 assign chip_en_dm12 = (dm_en == 4'b1000) ? 1'b0 : 1'b1;
 
 
-//always_comb
+//Data memory Byte addressable
 always @ (posedge clk)
 begin
 if (reset) begin
@@ -207,7 +248,7 @@ end
 end
 end
 
-//always_comb 
+//Control memory is byte addressable
 always @ (posedge clk)
 begin
 if (reset) begin
@@ -318,7 +359,7 @@ reg [63:0] cm_bit_en13;
 reg [63:0] cm_bit_en14;
 reg [63:0] cm_bit_en15;
 
-//always_comb
+//Based on address, determines if control memory is to be enabled
 always @ (posedge clk)
 begin
 if (reset) begin
@@ -368,7 +409,8 @@ assign cm_bit_en12 = (cm_en == 16'b0001000000000000) ? cm_bit_en : {64{1'b1}};
 assign cm_bit_en13 = (cm_en == 16'b0010000000000000) ? cm_bit_en : {64{1'b1}};
 assign cm_bit_en14 = (cm_en == 16'b0100000000000000) ? cm_bit_en : {64{1'b1}};
 assign cm_bit_en15 = (cm_en == 16'b1000000000000000) ? cm_bit_en : {64{1'b1}};
-
+	
+//Look-up table
 always @ (posedge clk)
 begin
 if (reset)
@@ -497,6 +539,8 @@ reg chip_en12_bist;
 reg wr_en12_bist;
 reg [1:0] count_dm_bist;
 
+
+//BIST test
 always @(posedge clk)
 begin
 if (reset) begin
@@ -629,6 +673,7 @@ else
 	bist_success <= 1'b0;
 end
 
+//DATA MEMORY
 
 TSDN40LPA512X32M4F data_mem0 (            //2K each
 .AA (addr_dm_shifted0),
@@ -1262,7 +1307,7 @@ end
 endgenerate
 
 
-//wangbo
+//Determines the input to the data memory - if from HyCUBE/tile or from external program input
 
 assign addr_dm_shifted0 = (!start_exec) ? address[10:2] : addr_dm_out[0][0];
 assign bit_en_shifted0 = (!start_exec) ? dm_bit_en : bit_en_out[0][0];
