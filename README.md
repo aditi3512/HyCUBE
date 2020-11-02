@@ -1,4 +1,6 @@
 # HyCUBE
+This work contains the RTL design for HyCUBE.
+Published at DAC 2017: https://www.comp.nus.edu.sg/~tulika/DAC17.pdf
 
 Top module is chip_with_pad
 
