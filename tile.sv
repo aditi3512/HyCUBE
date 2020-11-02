@@ -1,4 +1,45 @@
-
+////////////////////////////////////////////////////////////////////////////////
+////                                                                        ////
+//// Project Name: HyCUBE (Verilog, SystemVerilog)                          ////
+////                                                                        ////
+//// Module Name: tile	                                                    ////
+////                                                                        ////
+////                                                                        ////
+////  This file is part of the HyCUBE project                               ////
+////  https://github.com/aditi3512/HyCUBE                                   ////
+////                                                                        ////
+////  Author(s):                                                            ////
+////      NUS, MIT                                                          ////
+////                                                                        ////
+////  Refer to Readme.txt for more information                              ////
+////                                                                        ////
+////////////////////////////////////////////////////////////////////////////////
+////                                                                        ////
+//// Copyright 2020 Author(s)						    ////
+//// Permission is hereby granted, free of charge, to any person 	    ////
+//// obtaining a copy of this software and associated documentation 	    ////
+//// files (the "Software"), to deal in the Software without restriction,   ////
+//// including without limitation the rights to use, copy, modify, merge,   ////
+//// publish, distribute, sublicense, and/or sell copies of the Software,   ////
+//// and to permit persons to whom the Software is furnished to do so, 	    ////
+//// subject to the following conditions:				    ////
+////									    ////
+//// The above copyright notice and this permission notice shall be 	    ////
+//// included in all copies or substantial portions of the Software.	    ////
+////									    ////
+//// THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, 	    ////
+//// EXPRESS OR IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF     ////
+//// MERCHANTABILITY, FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. ////
+//// IN NO EVENT SHALL THE AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR 	    ////
+//// ANY CLAIM, DAMAGES OR OTHER LIABILITY, WHETHER IN AN ACTION OF 	    ////	
+//// CONTRACT, TORT OR OTHERWISE, ARISING FROM, OUT OF OR IN CONNECTION     ////
+//// WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.	    ////
+////                                                                        ////
+//// You should have received a copy of the MIT                             ////
+//// License along with this source; if not, download it                    ////
+//// from https://opensource.org/licenses/MIT                               ////
+////                                                                        ////
+////////////////////////////////////////////////////////////////////////////////
 module tile(
     clk,
     reset,
@@ -558,9 +599,9 @@ casex(ldst)
 		wr_en_dm <= 1'b1;
                 addr_dm <= op_shift[10:2];
                 data_in_dm <= {32{1'b0}};
-		$display ("ASK TILE rd_en_dm = %b", rd_en_dm);
-		$display ("ASK TILE wr_en_dm = %b", wr_en_dm);
-		$display ("ASK TILE addr_dm = %b", addr_dm);
+		//$display ("ASK TILE rd_en_dm = %b", rd_en_dm);
+		//$display ("ASK TILE wr_en_dm = %b", wr_en_dm);
+		//$display ("ASK TILE addr_dm = %b", addr_dm);
 		if (op_shift[1:0] == 2'b00)
 		bit_en <= 32'b0;
 		else
@@ -865,6 +906,9 @@ $display("ASK IN TILE ALU_OUT = %b", alu_out);
 $display("ASK In tile tile_out = %b", tile_out);
 end
 */
+	
+//crossbar settings
+	
 always @ (control_reg_data[20:18] or control_reg_data[17:15] or control_reg_data[14:12] or control_reg_data[11:9] or control_reg_data[8:6] or control_reg_data[5:3] or control_reg_data[2:0])
 //always @(posedge clk)
 begin
