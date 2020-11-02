@@ -2,7 +2,7 @@
 ////                                                                        ////
 //// Project Name: HyCUBE (Verilog, SystemVerilog)                          ////
 ////                                                                        ////
-//// Module Name: chip.                                                     ////
+//// Module Name: chip                                                      ////
 ////                                                                        ////
 ////                                                                        ////
 ////  This file is part of the Ethernet IP core project                     ////
