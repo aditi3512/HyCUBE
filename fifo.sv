@@ -5,7 +5,7 @@
 //// Module Name: fifo                                                      ////
 ////                                                                        ////
 ////                                                                        ////
-////  This file is part of the Ethernet IP core project                     ////
+////  This file is part of HyCUBE                                           ////
 ////  https://github.com/aditi3512/HyCUBE                                   ////
 ////                                                                        ////
 ////  Author(s):                                                            ////
@@ -34,9 +34,9 @@
 //// PURPOSE.  See the GNU Lesser General Public License for more           ////
 //// details.                                                               ////
 ////                                                                        ////
-//// You should have received a copy of the GNU Lesser General              ////
-//// Public License along with this source; if not, download it             ////
-//// from http://www.opencores.org/lgpl.shtml                               ////
+//// You should have received a copy of the MIT                             ////
+//// License along with this source; if not, download it                    ////
+//// from https://opensource.org/licenses/MIT                               ////
 ////                                                                        ////
 ////////////////////////////////////////////////////////////////////////////////
 //------------------------------------------------------------------------------
