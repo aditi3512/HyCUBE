@@ -5,7 +5,7 @@
 //// Module Name: chip_with_pad                                             ////
 ////                                                                        ////
 ////                                                                        ////
-////  This file is part of HyCUBE                                           ////
+////  This file is part of the HyCUBE project                               ////
 ////  https://github.com/aditi3512/HyCUBE                                   ////
 ////                                                                        ////
 ////  Author(s):                                                            ////
