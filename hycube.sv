@@ -5,11 +5,11 @@
 //// Module Name: hycube                                                    ////
 ////                                                                        ////
 ////                                                                        ////
-////  This file is part of the Ethernet IP core project                     ////
+////  This file is part of HyCUBE                                           ////
 ////  https://github.com/aditi3512/HyCUBE                                   ////
 ////                                                                        ////
 ////  Author(s):                                                            ////
-////      NUS                                                               ////
+////      NUS, MIT                                                          ////
 ////                                                                        ////
 ////  Refer to Readme.txt for more information                              ////
 ////                                                                        ////
@@ -34,9 +34,9 @@
 //// PURPOSE.  See the GNU Lesser General Public License for more           ////
 //// details.                                                               ////
 ////                                                                        ////
-//// You should have received a copy of the GNU Lesser General              ////
-//// Public License along with this source; if not, download it             ////
-//// from http://www.opencores.org/lgpl.shtml                               ////
+//// You should have received a copy of the MIT                             ////
+//// License along with this source; if not, download it                    ////
+//// from https://opensource.org/licenses/MIT                               ////
 ////                                                                        ////
 ////////////////////////////////////////////////////////////////////////////////
 
@@ -162,6 +162,8 @@ end
 end
 end
 
+//------------------------------------------------------------------------------
+	
 reg [3:0] dm_en;
 
 //Based on address, determines if data memory is to be enabled
@@ -190,7 +192,8 @@ assign chip_en_dm4 = (dm_en == 4'b0010) ? 1'b0 : 1'b1;
 assign chip_en_dm8 = (dm_en == 4'b0100) ? 1'b0 : 1'b1;
 assign chip_en_dm12 = (dm_en == 4'b1000) ? 1'b0 : 1'b1;
 
-
+//------------------------------------------------------------------------------
+	
 //Data memory Byte addressable
 always @ (posedge clk)
 begin
@@ -248,6 +251,8 @@ end
 end
 end
 
+//------------------------------------------------------------------------------
+	
 //Control memory is byte addressable
 always @ (posedge clk)
 begin
@@ -339,8 +344,10 @@ else begin
 	cm_bit_en = {{8{1'b1}},{8{1'b1}},{48{1'b1}}};
 end
 end
-end 
-
+end
+	
+//------------------------------------------------------------------------------
+	
 reg [15:0] cm_en;
 reg [63:0] cm_bit_en0;
 reg [63:0] cm_bit_en1;
@@ -409,6 +416,8 @@ assign cm_bit_en12 = (cm_en == 16'b0001000000000000) ? cm_bit_en : {64{1'b1}};
 assign cm_bit_en13 = (cm_en == 16'b0010000000000000) ? cm_bit_en : {64{1'b1}};
 assign cm_bit_en14 = (cm_en == 16'b0100000000000000) ? cm_bit_en : {64{1'b1}};
 assign cm_bit_en15 = (cm_en == 16'b1000000000000000) ? cm_bit_en : {64{1'b1}};
+
+//------------------------------------------------------------------------------
 	
 //Look-up table
 always @ (posedge clk)
@@ -539,7 +548,8 @@ reg chip_en12_bist;
 reg wr_en12_bist;
 reg [1:0] count_dm_bist;
 
-
+//------------------------------------------------------------------------------
+	
 //BIST test
 always @(posedge clk)
 begin
@@ -673,6 +683,8 @@ else
 	bist_success <= 1'b0;
 end
 
+//------------------------------------------------------------------------------
+	
 //DATA MEMORY
 
 TSDN40LPA512X32M4F data_mem0 (            //2K each
@@ -889,6 +901,7 @@ wire scan_chain_out;
         `endif
 
 wire [31:0] data_out_dm;
+	    
 //modify to specify data into tile by wangbo
 assign data_out_dm = (my_xy_id==4'b0000) ? data_out_dm0[31:0] : (my_xy_id==4'b0100) ? data_out_dm4[31:0] : (my_xy_id==4'b1000) ? data_out_dm8[31:0] : (my_xy_id==4'b1100) ? data_out_dm12[31:0] : 32'b0;
 
@@ -924,7 +937,6 @@ wire [5:0] loop_end_dash;
 assign loop_end_dash = (loop_end < loop_start) ? (loop_end + 6'b100000) : loop_end;  //incase loopstart (say 30) addr is greater than loopend address (say 5)
 
 
-//wangbo
 assign addr_dm_out[i][j] = addr_dm;
 assign bit_en_out[i][j] = bit_en;
 assign data_in_dm_out[i][j] = data_in_dm;
@@ -946,6 +958,8 @@ else if(chip_en) begin
 end
 end
 
+//Determines which instruction is read by tile from control memory
+	    
 always @(posedge clk)
 begin
 if (reset)
@@ -967,8 +981,10 @@ else if (chip_en) begin
 	end
 end
 end
+	    
+//------------------------------------------------------------------------------
 
-assign addr_shifted_out[i][j] = addr_shifted;
+	    assign addr_shifted_out[i][j] = addr_shifted;
 reg [63:0] cm_bit_en_shifted;
 
 //assign cm_bit_en_shifted = (my_xy_id==4'b0000) ? cm_bit_en0 : (my_xy_id==4'b0001) ? cm_bit_en1 : (my_xy_id==4'b0010) ? cm_bit_en2 :(my_xy_id==4'b0011) ? cm_bit_en3 :(my_xy_id==4'b0100) ? cm_bit_en4 :(my_xy_id==4'b0101) ? cm_bit_en5 :(my_xy_id==4'b0110) ? cm_bit_en6 :(my_xy_id==4'b0111) ? cm_bit_en7 :(my_xy_id==4'b1000) ? cm_bit_en8 :(my_xy_id==4'b1001) ? cm_bit_en9 :(my_xy_id==4'b1010) ? cm_bit_en10 :(my_xy_id==4'b1011) ? cm_bit_en11 :(my_xy_id==4'b1100) ? cm_bit_en12 :(my_xy_id==4'b1101) ? cm_bit_en13 :(my_xy_id==4'b1110) ? cm_bit_en14 :(my_xy_id==4'b1111) ? cm_bit_en15 : {64{1'b1}};
