@@ -1,0 +1,12 @@
+This tesbench is for simple pedometer code (adapt_pedometer.c) 
+In the C code we specify the loop kernel by using the compiler directive in the C code, so that the compiler can understand
+
+		#ifdef CGRA_COMPILER
+           please_map_me();
+        #endif
+
+When this code is passed to LLVM based compiler, it will generate the Data Flow Graph(DFG) which is the "pedometer_dfg". It represents the dataflow. Nodes represent different operations and interconnections are the dependencies between those operations
+Once DFG is generated, it is fed to the CGRA mapper to get the binary to program the configuration memories.
+Testbench load the data from following two files prior to triggering the execution
+	totaldata_corr.trc :: contain the instructions(which will be saved in configuration memory) and the data(which will be saved in data memory)
+	totaladdr_corr.trc :: Contain the corresponding addresses in which instructions and data needs to be saved
